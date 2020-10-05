@@ -26,6 +26,11 @@ router.get('/quotes/:id', asyncHandler(async (req, res, next) => {
     }
 }));
 
+router.get('/quotes/quote/random', asyncHandler(async (req, res, next) => {
+    const quote = await records.getRandomQuote();
+    res.json(quote);
+}));
+
 router.post('/quotes', asyncHandler(async (req, res, next) => {
     if (req.body.author && req.body.quote) {
         const quote = await records.createQuote({
