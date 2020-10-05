@@ -15,4 +15,13 @@ class Game {
             new Player('Player 2', 2, '#e59a13')];
         return players;
     }
+
+    /** 
+     * Begins game. 
+     */
+    startGame() {
+        this.board.drawHTMLBoard();
+        this.activePlayer.activeToken.drawHTMLToken();
+        this.ready = true;
+    }
 }
