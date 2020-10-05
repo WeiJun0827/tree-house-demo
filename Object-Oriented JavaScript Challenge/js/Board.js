@@ -2,12 +2,12 @@ class Board {
     constructor() {
         this.rows = 6;
         this.columns = 7;
-        this.space = this.createSpaces();
+        this.spaces = this.createSpaces();
     }
 
     /** 
      * Generates 2D array of spaces. 
-     * @return  {array}     An array of space objects
+     * @return  {array} An array of space objects
      */
     createSpaces() {
         const spaces = [];
