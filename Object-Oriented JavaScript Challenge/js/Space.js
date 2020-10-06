@@ -9,9 +9,17 @@ class Space {
     }
 
     /**
+     * Checks if space has an associated token to find its owner
+     * @return  {(null|Object)} Returns null or the owner object of the space's associated token.
+     */
+    get owner() {
+        return this.token === null ? null : this.token.owner;
+    }
+
+    /**
      * Draws SVG space
      */
-	drawSVGSpace() {    
+    drawSVGSpace() {
         const svgSpace = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         svgSpace.setAttributeNS(null, "id", this.id);
         svgSpace.setAttributeNS(null, "cx", (this.x * this.diameter) + this.radius);
@@ -20,6 +28,14 @@ class Space {
         svgSpace.setAttributeNS(null, "fill", "black");
         svgSpace.setAttributeNS(null, "stroke", "none");
 
-        document.getElementById("mask").appendChild(svgSpace);     
-	}	
+        document.getElementById("mask").appendChild(svgSpace);
+    }
+
+    /**
+     * Updates space to reflect a token has been dropped into it.
+     * @param {Object} token - The dropped token
+     */
+    mark(token) {
+        this.token = token;
+    }
 }
