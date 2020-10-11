@@ -16,16 +16,25 @@ const { Movie } = db.models;
     // Instance of the Movie class represents a database row
     const movie = await Movie.create({
       title: 'Inception',
+      runtime: 148,
+      releaseDate: '2010-07-16',
+      isAvailableOnVHS: true,
     });
     console.log(movie.toJSON());
 
     // Create multiple records
     const movieInstances = await Promise.all([
       Movie.create({
-        title: 'Toy Story'
+        title: 'Toy Story',
+        runtime: 81,
+        releaseDate: '1995-11-22',
+        isAvailableOnVHS: true,
       }),
       Movie.create({
-        title: 'The Incredibles'
+        title: 'The Incredibles',
+        runtime: 115,
+        releaseDate: '2004-04-14',
+        isAvailableOnVHS: true,
       }),
     ]);
     const moviesJSON = movieInstances.map(movie => movie.toJSON());
