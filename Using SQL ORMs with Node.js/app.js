@@ -1,5 +1,5 @@
 const db = require('./db');
-const { Movie } = db.models;
+const { Movie, Person } = db.models;
 
 (async () => {
 
@@ -21,6 +21,12 @@ const { Movie } = db.models;
       isAvailableOnVHS: true,
     });
     console.log(movie.toJSON());
+
+    const person = await Person.create({
+      firstName: 'Tom',
+      lastName: 'Hanks',
+    });
+    console.log(person.toJSON());
 
     // Create multiple records
     const movieInstances = await Promise.all([
