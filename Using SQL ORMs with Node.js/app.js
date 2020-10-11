@@ -1,5 +1,6 @@
 const db = require('./db');
 const { Movie, Person } = db.models;
+const { Op } = db.Sequelize;
 
 (async () => {
 
@@ -69,6 +70,33 @@ const { Movie, Person } = db.models;
     });
     // SELECT * FROM Movies WHERE runtime = 81 AND isAvailableOnVHS = true;
     console.log(movies.map(movie => movie.toJSON()));
+
+    const movies2 = await Movie.findAll({
+      attributes: ['id', 'title'], // return only id and title
+      where: {
+        title: {
+          [Op.endsWith]: 'story'
+        },
+        runtime: {
+          [Op.gt]: 95, // greater than 95
+        },
+        releaseDate: {
+          [Op.gte]: '2004-01-01', // greater than or equal to the date
+        },
+      }
+    });
+    console.log(movies2.map(movie => movie.toJSON()));
+
+    const movies3 = await Movie.findAll({
+      attributes: ['id', 'title', 'releaseDate'],
+      where: {
+        runtime: {
+          [Op.between]: [75, 150]
+        }
+      },
+      order: [['releaseDate', 'ASC']], // dates in ascending order
+    });
+    console.log( movies3.map(movie => movie.toJSON()) );
 
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
