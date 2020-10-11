@@ -20,22 +20,22 @@ const { Movie, Person } = db.models;
       releaseDate: '2010-07-16',
       isAvailableOnVHS: true,
     });
-    console.log(movie.toJSON());
+    //console.log(movie.toJSON());
 
     const person = await Person.create({
       firstName: 'Tom',
       lastName: 'Hanks',
     });
-    console.log(person.toJSON());
+    //console.log(person.toJSON());
 
     const person2 = await Person.build({
       firstName: 'Brad',
       lastName: 'B',
     }); // person2 is not stored in the database yet
-    console.log(person2.toJSON());
+    //console.log(person2.toJSON());
     person2.lastName = 'Bird'; // Update property
     await person2.save(); // person2 is now stored in the database
-    console.log(person2.toJSON());
+    //console.log(person2.toJSON());
 
     // Create multiple records
     const movieInstances = await Promise.all([
@@ -53,7 +53,22 @@ const { Movie, Person } = db.models;
       }),
     ]);
     const moviesJSON = movieInstances.map(movie => movie.toJSON());
-    console.log(moviesJSON);
+    //console.log(moviesJSON);
+
+    const movieById = await Movie.findByPk(1);
+    console.log(movieById.toJSON());
+
+    const movieByRuntime = await Movie.findOne({ where: { runtime: 115 } });
+    console.log(movieByRuntime.toJSON());
+
+    const movies = await Movie.findAll({
+      where: {
+        runtime: 81,
+        isAvailableOnVHS: true
+      }
+    });
+    // SELECT * FROM Movies WHERE runtime = 81 AND isAvailableOnVHS = true;
+    console.log(movies.map(movie => movie.toJSON()));
 
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
