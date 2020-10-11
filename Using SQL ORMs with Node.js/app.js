@@ -57,10 +57,10 @@ const { Op } = db.Sequelize;
     //console.log(moviesJSON);
 
     const movieById = await Movie.findByPk(1);
-    console.log(movieById.toJSON());
+    //console.log(movieById.toJSON());
 
     const movieByRuntime = await Movie.findOne({ where: { runtime: 115 } });
-    console.log(movieByRuntime.toJSON());
+    //console.log(movieByRuntime.toJSON());
 
     const movies = await Movie.findAll({
       where: {
@@ -69,7 +69,7 @@ const { Op } = db.Sequelize;
       }
     });
     // SELECT * FROM Movies WHERE runtime = 81 AND isAvailableOnVHS = true;
-    console.log(movies.map(movie => movie.toJSON()));
+    //console.log(movies.map(movie => movie.toJSON()));
 
     const movies2 = await Movie.findAll({
       attributes: ['id', 'title'], // return only id and title
@@ -85,7 +85,7 @@ const { Op } = db.Sequelize;
         },
       }
     });
-    console.log(movies2.map(movie => movie.toJSON()));
+    //console.log(movies2.map(movie => movie.toJSON()));
 
     const movies3 = await Movie.findAll({
       attributes: ['id', 'title', 'releaseDate'],
@@ -96,7 +96,27 @@ const { Op } = db.Sequelize;
       },
       order: [['releaseDate', 'ASC']], // dates in ascending order
     });
-    console.log( movies3.map(movie => movie.toJSON()) );
+    //console.log( movies3.map(movie => movie.toJSON()) );
+
+    const toyStory3 = await Movie.findByPk(2);
+    toyStory3.isAvailableOnVHS = false;
+    await toyStory3.save();
+    // Calling get({ plain: true}) returns the same as calling .toJSON()
+    console.log(toyStory3.get({ plain: true }));
+
+    await toyStory3.update({
+      title: 'Trinket Tale 3', // this will be ignored
+      isAvailableOnVHS: true,
+    }, { fields: ['isAvailableOnVHS'] });
+    console.log(toyStory3.get({ plain: true }));
+
+    // Find a record
+    const toyStory = await Movie.findByPk(2);
+    // Delete a record
+    await toyStory.destroy();
+    // Find and log all movies
+    const movies4 = await Movie.findAll();
+    console.log(movies4.map(movie => movie.toJSON()));
 
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
