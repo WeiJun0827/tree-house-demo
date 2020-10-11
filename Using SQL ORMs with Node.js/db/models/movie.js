@@ -56,8 +56,12 @@ module.exports = (sequelize) => {
     },
     //Set the model options
     {
-      //The only required option is a sequelize property that defines the sequelize instance to attach to the model
-      sequelize // same as { sequelize: sequelize }
+      // The only required option is a sequelize property that defines the sequelize instance to attach to the model
+      sequelize, // same as { sequelize: sequelize }
+      // timestamps: false, // disable timestamps
+      // freezeTableName: true, // disable plural table names
+      // modelName: 'movie', // set model name to 'movie'; table name will be 'movies'
+      // tableName: 'my_movies_table', // table name change
     });
 
   return Movie;
