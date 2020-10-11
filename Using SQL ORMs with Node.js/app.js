@@ -28,6 +28,15 @@ const { Movie, Person } = db.models;
     });
     console.log(person.toJSON());
 
+    const person2 = await Person.build({
+      firstName: 'Brad',
+      lastName: 'B',
+    }); // person2 is not stored in the database yet
+    console.log(person2.toJSON());
+    person2.lastName = 'Bird'; // Update property
+    await person2.save(); // person2 is now stored in the database
+    console.log(person2.toJSON());
+
     // Create multiple records
     const movieInstances = await Promise.all([
       Movie.create({
