@@ -1,23 +1,5 @@
-const Sequelize = require('sequelize');
-
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'movies.db',
-  logging: true // enable logging, default
-});
-
-// Movie model
-class Movie extends Sequelize.Model { }
-Movie.init(
-  //Set the model attributes
-  {
-    title: Sequelize.STRING
-  },
-  //Set the model options
-  {
-    //The only required option is a sequelize property that defines the sequelize instance to attach to the model
-    sequelize // same as { sequelize: sequelize }
-  });
+const db = require('./db');
+const { Movie } = db.models;
 
 (async () => {
 
@@ -25,10 +7,10 @@ Movie.init(
   //await Movie.sync();
 
   // Sync all tables with CREATE TABLE IF NOT EXISTS statement
-  //await sequelize.sync();
+  //await db.sequelize.sync();
 
   // Force sync all tables with DROP TABLE IF EXISTS before issuing the CREATE TABLE IF NOT EXISTS
-  await sequelize.sync({ force: true });
+  await db.sequelize.sync({ force: true });
 
   try {
     // Instance of the Movie class represents a database row
