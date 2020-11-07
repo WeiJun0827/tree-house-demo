@@ -2,6 +2,7 @@ const db = require('./db');
 const { Movie, Person } = db.models;
 const { Op } = db.Sequelize;
 
+// note
 (async () => {
 
   // Sync 'Movies' table
